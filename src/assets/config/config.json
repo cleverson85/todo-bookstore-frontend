@@ -1,0 +1,8 @@
+{
+  "name": "local",
+  "production": false,
+  "api": {
+    "url": "https://localhost:44306/api/"
+  },
+  "itensPerPage": 9
+}

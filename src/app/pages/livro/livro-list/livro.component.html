@@ -1,0 +1,76 @@
+<div class="container-fluid">
+  <div class="search">
+    <div class="cad">
+      <h1>Livros</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="input-group w-75">
+        <input type="text" class="form-control" placeholder="{{ placeholder }}" aria-describedby="button-addon4" #valueToSearch>
+        <div class="input-group-append" id="button-addon4">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Consultar por {{ placeholder }}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="changePlaceholder('Autor', 'A')" style="cursor: pointer;">Autor</a>
+            <a class="dropdown-item" (click)="changePlaceholder('Titulo', 'C')" style="cursor: pointer;">Titulo</a>
+          </div>
+
+          <div class="form-group m-0">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gênero - {{ genero?.nome }}</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" style="cursor: pointer;" *ngFor="let item of generos" (click)="changeGenero(item)">{{ item.nome }}</a>
+            </div>
+          </div>
+
+          <a class="btn btn-success" role="button" (click)="find(valueToSearch.value)">Consultar</a>
+          <a class="btn btn-primary" role="button" routerLink="/livro/0">Cadastrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="livros?.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Titulo</th>
+          <th>Autor</th>
+          <th>Capa</th>
+          <th>Gênero</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let item of livros'>
+          <td>
+            <span>{{ item.id }}</span>
+          </td>
+          <td>
+            <span>{{ item.titulo }}</span>
+          </td>
+          <td>
+            <span>{{ item.autor }}</span>
+          </td>
+          <td>
+            <span>
+              <ngx-avatar [src]="item.imagemCapa" size="30" value="28%" [round]="true" [name]="item.titulo"></ngx-avatar>
+            </span>
+          </td>
+          <td>
+            <span>{{ item.genero?.nome }}</span>
+          </td>
+          <td class="status">
+            <span [class]="item.disponivel ? 'disponivel' : 'indisponivel'">
+              {{ item.disponivel ? 'Disponivel' : 'Indisponível' }}
+            </span>
+          </td>
+          <td>
+            <app-menu-list [route]="'livro/' + item.id" [delete]="item" (detalhe)="detalhes(item)" (livros)="getLivros()"></app-menu-list>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer">
+      <app-pagination [numberPages]="pages" (pageChange)="onPageChange($event)" *ngIf="livros?.length > 0"></app-pagination>
+    </div>
+  </div>
+</div>

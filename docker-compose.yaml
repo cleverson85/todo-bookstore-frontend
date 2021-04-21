@@ -1,0 +1,14 @@
+version: "3.6"
+
+services:
+  web:
+    build:
+      context: .
+    container_name: todo-booksstore-frontend
+    environment:
+      APP_NAME: "ToDo Book Store"
+      PRODUCTION: "true"
+      API_URL: "http://localhost:5050/api/"
+      QTD_ITEM: "10"
+    ports:
+      - 8080:80

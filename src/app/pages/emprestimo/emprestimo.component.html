@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="search">
+    <div class="cad">
+      <h1>Empréstimos</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="input-group w-75">
+        <input type="text" class="form-control" placeholder="{{ placeholder }}" aria-describedby="button-addon4" #valueToSearch>
+        <div class="input-group-append" id="button-addon4">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Procurar por {{ placeholder }}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="changePlaceholder('Nome', 'A')" style="cursor: pointer;">Nome</a>
+            <a class="dropdown-item" (click)="changePlaceholder('Cpf', 'B')" style="cursor: pointer;">Cpf</a>
+            <a class="dropdown-item" (click)="changePlaceholder('E-mail', 'C')" style="cursor: pointer;">E-mail</a>
+          </div>
+          <a class="btn btn-success" role="button" (click)="find(valueToSearch.value)">Procurar</a>
+          <a class="btn btn-primary" role="button" routerLink="/aluno/0">Cadastrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>
+            <a>
+              Nome <span class="material-icons" style="cursor: pointer;">swap_vert</span>
+            </a>
+          </th>
+          <th>Nome Álbuns</th>
+          <th>Imagem Álbuns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td>
+            <span></span>
+          </td>
+          <td>
+            <span></span>
+          </td>
+          <td>
+            <span></span>
+          </td>
+          <td>
+            <span>
+                
+            </span>
+          </td>
+          <td>
+            <app-menu-list></app-menu-list>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer">
+      <app-pagination (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>
