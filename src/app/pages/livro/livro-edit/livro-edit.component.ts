@@ -58,7 +58,7 @@ export class LivroEditComponent implements OnInit, OnDestroy {
     return this.formGroup.get(field)?.errors;
   }
 
-  async save() {
+  save() {
     this.submitted = true;
 
     if (this.formGroup.valid) {
@@ -72,9 +72,8 @@ export class LivroEditComponent implements OnInit, OnDestroy {
   }
 
   configurarImagem(){
-    if (this.livro && this.livro.imagemCapa?.length > 0) {
-      const { imagemCapa } = this.livro.imagemCapa[0];
-      this.url = `data:image/jpeg;base64,${imagemCapa}`;
+    if (this.livro && this.livro.imagemCapa) {
+      this.url = `data:image/jpeg;base64,${this.livro.imagemCapa}`;
 
       fetch(this.url)
         .then(res => res.blob())

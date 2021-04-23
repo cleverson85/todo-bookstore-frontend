@@ -14,7 +14,5 @@ http://localhost:8080
 
 yarn start => para debug
 
-# Usuário Somente consulta
-
 Usuário: usuario@admin.com.br
 Senha: 123456

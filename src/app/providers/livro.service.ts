@@ -20,8 +20,6 @@ export class LivroService extends BaseService {
   generoSubject$ = new BehaviorSubject<any>({});
   genero$ = this.generoSubject$.asObservable();
 
-  itemsPerPage = Environment.settings.itensPerPage;
-
   setLivro(value: any) {
     this.livroSubject$.next(value);
   }
@@ -77,8 +75,6 @@ export class LivroService extends BaseService {
         }`
       );
     }
-
-    return this.getLivros(1);
   }
 
   salvar(formGroup: any, file: File) {
@@ -99,5 +95,9 @@ export class LivroService extends BaseService {
           }
         );
     }).catch(e => console.log(e));
+  }
+
+  getByDescription(description: string): Observable<Livro[]> {
+    return this.post<any>({ description: description }, ApiRoute.LIVRO_DESCRIPTION);
   }
 }

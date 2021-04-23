@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GenericResolverGuard } from 'src/app/guards/generic.resolver.guard';
+import { ApiRoute } from 'src/app/shared/enum/apiRoutes.enum';
+import { EmprestimoEditComponent } from './emprestimo-edit/emprestimo-edit.component';
 import { EmprestimoComponent } from './emprestimo.component';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: EmprestimoComponent
+  // },
   {
     path: '',
-    component: EmprestimoComponent
-  },
-  {
-    path: ':id',
-    component: EmprestimoComponent,
-    resolve: { emprestimo: typeof GenericResolverGuard },
-    data: { resolverData: { url: 'api.com/users', method: 'get' } },
+    component: EmprestimoEditComponent,
   },
 ];
 
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EmprestimoRoutingModule {}
+export class EmprestimoRoutingModule { }

@@ -2,7 +2,7 @@
   "name": "local",
   "production": false,
   "api": {
-    "url": "https://localhost:44306/api/"
+    "url": "http://localhost:5050/api/"
   },
   "itensPerPage": 9
 }

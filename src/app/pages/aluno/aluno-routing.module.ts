@@ -1,7 +1,9 @@
+import { ApiRoute } from './../../shared/enum/apiRoutes.enum';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GenericResolverGuard } from 'src/app/guards/generic.resolver.guard';
-import { AlunoComponent } from './aluno.component';
+import { AlunoEditComponent } from './aluno-edit/aluno-edit.component';
+import { AlunoComponent } from './aluno-list/aluno.component';
 
 const routes: Routes = [
   {
@@ -10,9 +12,9 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: AlunoComponent,
-    resolve: { cliente: typeof GenericResolverGuard },
-    data: { resolverData: { url: 'api.com/users', method: 'get' } },
+    component: AlunoEditComponent,
+    resolve: { aluno: GenericResolverGuard },
+    data: { resolverData: { url: `${ApiRoute.ALUNO_ID}` } },
   },
 ];
 

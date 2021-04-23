@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GenericResolverGuard } from 'src/app/guards/generic.resolver.guard';
-import { InstituicaoEnsinoComponent } from './instituicao-ensino.component';
+import { ApiRoute } from 'src/app/shared/enum/apiRoutes.enum';
+import { InstituicaoEditComponent } from './instituicao-edit/instituicao-edit.component';
+import { InstituicaoEnsinoComponent } from './instituicao-list/instituicao-ensino.component';
 
 const routes: Routes = [
   {
@@ -10,9 +12,9 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: InstituicaoEnsinoComponent,
-    resolve: { emprestimo: typeof GenericResolverGuard },
-    data: { resolverData: { url: 'api.com/users', method: 'get' } },
+    component: InstituicaoEditComponent,
+    resolve: { instituicao: GenericResolverGuard },
+    data: { resolverData: { url: `${ApiRoute.INSTITUICAO_ID}` } },
   },
 ];
 
@@ -20,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class InstituicaoEnsinoRoutingModule {}
+export class InstituicaoEnsinoRoutingModule { }

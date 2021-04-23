@@ -32,7 +32,7 @@ export function initializeApp(environmentConfig: Environment) {
     NoopAnimationsModule,
     MenuModule,
     ConfirmModalModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [
     Environment,

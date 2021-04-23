@@ -29,8 +29,6 @@ export class LivroComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private livroService: LivroService,
     private modalService: ModalService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
   ) { }
 
   ngOnInit() {
@@ -45,9 +43,7 @@ export class LivroComponent implements OnInit, OnDestroy {
   getLivros(page?: number) {
     this.subscription.add(
       this.livroService.getLivros(page).subscribe((result: any) => {
-            const { count, items } = result;
-            this.livros = items;
-            this.pages = count;
+            this.configureItens(result);
           }
         )
     );
@@ -77,9 +73,11 @@ export class LivroComponent implements OnInit, OnDestroy {
   }
 
   configureItens(result: any) {
-    const { count, items } = result;
-    this.livros = items;
-    this.pages = count;
+    if (result) {
+      const { count, items } = result;
+      this.livros = items;
+      this.pages = count;
+    }
   }
 
   detalhes(livro: Livro) {

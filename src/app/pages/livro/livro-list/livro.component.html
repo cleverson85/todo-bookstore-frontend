@@ -52,7 +52,7 @@
           </td>
           <td>
             <span>
-              <ngx-avatar [src]="item.imagemCapa" size="30" value="28%" [round]="true" [name]="item.titulo"></ngx-avatar>
+              <ngx-avatar [src]="'data:image/jpeg;base64,' + item.imagemCapa" size="30" value="28%" [round]="true" [name]="item.titulo"></ngx-avatar>
             </span>
           </td>
           <td>
@@ -64,13 +64,13 @@
             </span>
           </td>
           <td>
-            <app-menu-list [route]="'livro/' + item.id" [delete]="item" (detalhe)="detalhes(item)" (livros)="getLivros()"></app-menu-list>
+            <app-menu-list [route]="'livro/' + item.id" [delete]="item" (detalhe)="detalhes(item)"></app-menu-list>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="footer">
-      <app-pagination [numberPages]="pages" (pageChange)="onPageChange($event)" *ngIf="livros?.length > 0"></app-pagination>
+      <app-pagination [numberPages]="pages" (pageChange)="onPageChange($event)"></app-pagination>
     </div>
   </div>
 </div>

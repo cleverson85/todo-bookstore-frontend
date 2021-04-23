@@ -1,0 +1,208 @@
+<div class="container-fluid">
+  <div class="cad">
+    <h1>Cadastrar Emprestimo</h1>
+    <div>
+      <button type="button" class="btn btn-danger" routerLink="/home">
+        Cancelar
+      </button>
+      <button type="sumit" class="btn btn-primary" (click)="save()">
+        Salvar
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="card" style="width: 50%;">
+      <div class="card-body">
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="dataIni">Data inicio *</label>&nbsp;&nbsp;
+            <dp-date-picker [config]="datePickerConfig" theme="dp-material"
+                required="true" (onChange)="addDataInicio($event)"></dp-date-picker> 
+          </div>
+          <div class="form-group col-md-6">
+            <label for="dataFim">Data entrega *</label>&nbsp;&nbsp;
+            <dp-date-picker [config]="datePickerConfig" theme="dp-material" required="true" (onChange)="addDataFim($event)"></dp-date-picker> 
+          </div>
+        </div>
+
+        <div class="form-row d-flex align-items-center justify-content-between">
+          <div class="form-group col-md-12">
+            <label for="nome">Consultar aluno *</label>
+            <input
+              id="nome"
+              class="form-control"
+              type="text"
+              placeholder="Nome"
+              placeholder="Consultar por nome aluno, cpf aluno, e-mail aluno" (keyup)="findAlunos(aluno.value)" #aluno>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="alunoSelected?.length > 0">
+          <div class="form-group col-md-12">
+            <div>
+              <table class="table table-hover table-sm">
+                <tbody>
+                  <tr *ngFor='let item of alunoSelected'>
+                    <td>
+                      <span>{{ item.id }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.pessoa?.nome }}</span>
+                    </td>
+                    <td>
+                      <span>
+                        <button type="sumit" class="btn btn-danger btn-sm" (click)="removerAluno()">
+                          Remover
+                        </button>
+                      </span>
+                    </td>
+                  </tr> 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>   
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div>
+              <table class="table table-hover table-sm">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let item of alunos'>
+                    <td>
+                      <span>{{ item.id }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.pessoa?.nome }}</span>
+                    </td>
+                    <td>
+                      <span>
+                        <button type="sumit" class="btn btn-primary btn-sm" (click)="adicionarAluno(item)">
+                          Adicionar
+                        </button>
+                      </span>
+                    </td>
+                  </tr> 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>   
+        
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="nome">Consultar livros *</label>
+            <input
+              id="livro"
+              class="form-control"
+              type="text"
+              placeholder="Consultar por nome livro, nome autor (livros disponíveis para emprestimo)" (keyup)="findLivros(livro.value)" #livro>
+          </div>
+        </div> 
+
+        <div class="form-row" *ngIf="livrosSelected?.length > 0">
+          <div class="form-group col-md-12">
+            <div>
+              <table class="table table-hover table-sm">
+                <tbody>
+                  <tr *ngFor='let item of livrosSelected'>
+                    <td>
+                      <span>{{ item.id }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.titulo }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.autor }}</span>
+                    </td>
+                    <td>
+                      <span>
+                        <ngx-avatar [src]="'data:image/jpeg;base64,' + item.imagemCapa" size="30" value="28%" [round]="true" [name]="item.titulo"></ngx-avatar>
+                      </span>
+                    </td>
+                    <td>
+                      <span>{{ item.genero?.nome }}</span>
+                    </td>
+                    <td class="status">
+                      <span [class]="item.disponivel ? 'disponivel' : 'indisponivel'">
+                        {{ item.disponivel ? 'Disponivel' : 'Indisponível' }}
+                      </span>
+                    </td>
+                    <td>
+                      <span>
+                        <button type="sumit" class="btn btn-danger btn-sm" (click)="removerLivro(item)">
+                          Remover
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>   
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div>
+              <table class="table table-hover table-sm">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Capa</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let item of livros'>
+                    <td>
+                      <span>{{ item.id }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.titulo }}</span>
+                    </td>
+                    <td>
+                      <span>{{ item.autor }}</span>
+                    </td>
+                    <td>
+                      <span>
+                        <ngx-avatar [src]="'data:image/jpeg;base64,' + item.imagemCapa" size="30" value="28%" [round]="true" [name]="item.titulo"></ngx-avatar>
+                      </span>
+                    </td>
+                    <td>
+                      <span>{{ item.genero?.nome }}</span>
+                    </td>
+                    <td class="status">
+                      <span [class]="item.disponivel ? 'disponivel' : 'indisponivel'">
+                        {{ item.disponivel ? 'Disponivel' : 'Indisponível' }}
+                      </span>
+                    </td>
+                    <td>
+                      <span>
+                        <button type="sumit" class="btn btn-primary btn-sm" (click)="adicionarLivro(item)">
+                          Adicionar
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </form>
+</div>

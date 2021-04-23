@@ -1,0 +1,171 @@
+<div class="container-fluid">
+  <div class="cad">
+    <h1>{{ titulo }}</h1>
+    <div>
+      <button type="button" class="btn btn-danger" routerLink="/aluno">
+        Cancelar
+      </button>
+      <button type="sumit" class="btn btn-primary" (click)="save()">
+        Salvar
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="card" style="width: 50%;">
+      <div class="card-body">
+        <div class="form-row d-flex align-items-center justify-content-between">
+          <div class="form-group col-md-10">
+            <label for="nome">Nome *</label>
+            <input
+              id="nome"
+              class="form-control"
+              type="text"
+              placeholder="Nome"
+              formControlName="nome"
+              [ngClass]="{ 'is-invalid': submitted && hasError('nome') }">
+              <div class="invalid-feedback" *ngIf="hasError('nome') && hasError('nome')['required']">
+                Informe o nome.
+              </div>
+          </div>
+          <div class="form-group form-check col-md-1">
+            <input type="checkbox" class="form-check-input" id="situacaoView" formControlName="situacaoView">
+            <label class="form-check-label" for="situacaoView">Ativo</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="cpf">Cpf *</label>
+            <input
+              id="cpf"
+              class="form-control"
+              type="text"
+              placeholder="Cpf"
+              formControlName="cpf"
+              [ngClass]="{ 'is-invalid': submitted && hasError('cpf') }">
+              <div class="invalid-feedback" *ngIf="hasError('cpf') && hasError('cpf')['required']">
+                Informe o cpf.
+              </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="telefone">Telefone</label>
+            <input 
+              id="telefone"
+              class="form-control"
+              type="text"
+              placeholder="Telefone"
+              formControlName="telefone"
+              [ngClass]="{ 'is-invalid': submitted && hasError('telefone') }">
+              <div class="invalid-feedback" *ngIf="hasError('telefone') && hasError('telefone')['required']">
+                Informe o telefone.
+              </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">E-mail</label>
+            <input 
+              id="email"
+              class="form-control"
+              type="text"
+              placeholder="E-mail"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && hasError('email') }">
+              <div class="invalid-feedback" *ngIf="hasError('email') && hasError('email')['required']">
+                Informe o email.
+              </div>
+          </div>
+        </div>   
+        
+        <div class="form-row">
+          <label for="end">Endereço</label>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="cpf">Cep</label>
+            <input
+              id="cep"
+              class="form-control"
+              type="text"
+              placeholder="Cep"
+              formControlName="cep"
+              (blur)="carregaEndereco($event)">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-8">
+            <label for="logradouro">Rua</label>
+            <input
+              id="logradouro"
+              class="form-control"
+              type="text"
+              placeholder="Rua, Av., "
+              formControlName="logradouro">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="numero">N°</label>
+            <input 
+              id="numero"
+              class="form-control"
+              type="number"
+              placeholder="Número"
+              formControlName="numero">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="bairro">Bairro</label>
+            <input 
+              id="bairro"
+              class="form-control"
+              type="text"
+              placeholder="Bairro"
+              formControlName="bairro">
+          </div>
+        </div>  
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="cidade">Cidade</label>
+            <input
+              id="cidade"
+              class="form-control"
+              type="text"
+              placeholder="Cidade"
+              formControlName="cidade">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="estado">Estado</label>
+            <input 
+              id="estado"
+              class="form-control"
+              type="text"
+              placeholder="Estado"
+              formControlName="estado">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="complemento">Complemento</label>
+            <input 
+              id="complemento"
+              class="form-control"
+              type="text"
+              placeholder="Complemento"
+              formControlName="complemento">
+          </div>
+        </div>  
+        
+
+        <div class="form-row">
+          <div class="form-group col-md-12 d-flex flex-column">
+            <label for="genero">Instituição de Ensino</label>
+            <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" formControlName="instituicaoEnsinoId" 
+              [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
+              <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.pessoa.nome }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="hasError('instituicaoEnsinoId') && hasError('instituicaoEnsinoId')['required']">
+              Informe a instiuição de ensino.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
