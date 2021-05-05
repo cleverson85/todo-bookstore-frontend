@@ -8,7 +8,7 @@ import { AlunoComponent } from './aluno-list/aluno.component';
 const routes: Routes = [
   {
     path: '',
-    component: AlunoComponent
+    component: AlunoComponent,
   },
   {
     path: ':id',

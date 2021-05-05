@@ -42,7 +42,6 @@ class BaseService {
   }
 
   salvar(apiRoute: ApiRoute, formGroup: any, routerReturn: string) {
-    console.log(formGroup);
     this.httpClient.post(this.API + apiRoute, formGroup)
       .subscribe((result: any) => {
           this.toasterService.showToastSuccess('Operação efetuada com sucesso.');

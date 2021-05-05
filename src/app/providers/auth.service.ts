@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Usuario } from 'src/app/models/usuario';
 import { Environment } from '../environment.service';
 import { ApiRoute } from '../shared/enum/apiRoutes.enum';
-import { Token } from './../shared/token.enum';
+import { Token } from '../shared/enum/token.enum';
 import { ToasterService } from './common/toaster.service';
 
 @Injectable({

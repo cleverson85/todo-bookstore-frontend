@@ -46,7 +46,7 @@ export class AlunoComponent implements OnInit, OnDestroy {
 
   find(description: string) {
     this.subscription.add(
-      this.alunoService.getAlunosByDescription(this.searchValue, description)
+      this.alunoService.getAlunosByDescription(description)
         .subscribe((result: any) => {
           if (result?.items.length === 0) {
             this.toasterService.showToastWarning('Nenhum item foi encontrado.');

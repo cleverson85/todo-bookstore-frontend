@@ -75,90 +75,14 @@
           </div>
         </div>   
         
-        <div class="form-row">
-          <label for="end">Endereço</label>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-3">
-            <label for="cpf">Cep</label>
-            <input
-              id="cep"
-              class="form-control"
-              type="text"
-              placeholder="Cep"
-              formControlName="cep"
-              (blur)="carregaEndereco($event)">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-8">
-            <label for="logradouro">Rua</label>
-            <input
-              id="logradouro"
-              class="form-control"
-              type="text"
-              placeholder="Rua, Av., "
-              formControlName="logradouro">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="numero">N°</label>
-            <input 
-              id="numero"
-              class="form-control"
-              type="number"
-              placeholder="Número"
-              formControlName="numero">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="bairro">Bairro</label>
-            <input 
-              id="bairro"
-              class="form-control"
-              type="text"
-              placeholder="Bairro"
-              formControlName="bairro">
-          </div>
-        </div>  
-
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="cidade">Cidade</label>
-            <input
-              id="cidade"
-              class="form-control"
-              type="text"
-              placeholder="Cidade"
-              formControlName="cidade">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="estado">Estado</label>
-            <input 
-              id="estado"
-              class="form-control"
-              type="text"
-              placeholder="Estado"
-              formControlName="estado">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="complemento">Complemento</label>
-            <input 
-              id="complemento"
-              class="form-control"
-              type="text"
-              placeholder="Complemento"
-              formControlName="complemento">
-          </div>
-        </div>  
-        
+        <app-endereco [data]="aluno" [submitted]="submitted" ></app-endereco>
 
         <div class="form-row">
           <div class="form-group col-md-12 d-flex flex-column">
             <label for="genero">Instituição de Ensino</label>
             <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" formControlName="instituicaoEnsinoId" 
               [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
-              <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.pessoa.nome }}</option>
+              <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.nome }}</option>
             </select>
             <div class="invalid-feedback" *ngIf="hasError('instituicaoEnsinoId') && hasError('instituicaoEnsinoId')['required']">
               Informe a instiuição de ensino.

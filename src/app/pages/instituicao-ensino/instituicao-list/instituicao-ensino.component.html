@@ -30,13 +30,13 @@
             <span>{{ item.id }}</span>
           </td>
           <td>
-            <span>{{ item.pessoa?.nome }}</span>
+            <span>{{ item?.nome }}</span>
           </td>
           <td>
-            <span>{{ item.cnpj }}</span>
+            <span>{{ item?.cnpj }}</span>
           </td>
           <td>
-            <span>{{ item.pessoa?.telefone }}</span>
+            <span>{{ item?.telefone }}</span>
           </td>
           <td>
             <app-menu-list [route]="'instituicao/' + item.id" [delete]="item" (detalhe)="detalhes(item)"></app-menu-list>

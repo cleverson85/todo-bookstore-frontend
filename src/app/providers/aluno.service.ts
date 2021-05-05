@@ -21,35 +21,10 @@ export class AlunoService extends BaseService {
   }
 
   getAlunosByDescription(
-    searchValue: SearchValuesAluno,
     description: string,
   ): Observable<Aluno[]> {
-    if (SearchValuesAluno.Nome === searchValue && description) {
-      return this.get<Aluno[]>(
-        `${ApiRoute.ALUNO_NOME}${description}?pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
-      );
+    if (description) {
+      return this.post<any>({ description: description }, ApiRoute.ALUNO_DESCRIPTION);
     }
-
-    if (SearchValuesAluno.Cpf === searchValue && description) {
-      return this.get<Aluno[]>(
-        `${ApiRoute.ALUNO_CPF}${description}$?pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
-      );
-    }
-
-    if (SearchValuesAluno.Email === searchValue && description) {
-      return this.get<Aluno[]>(
-        `${ApiRoute.ALUNO_EMAIL}${description}${description}?pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
-      );
-    }
-  }
-
-  getByDescription(description: string): Observable<Aluno[]> {
-    return this.post<any>({ description: description }, ApiRoute.ALUNO_DESCRIPTION);
   }
 }

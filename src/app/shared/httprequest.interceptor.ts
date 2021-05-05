@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Token } from './token.enum';
+import { Token } from './enum/token.enum';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EnderecoComponent } from 'src/app/components/endereco/endereco.component';
 import { AlunoService } from 'src/app/providers/aluno.service';
 import { ToasterService } from 'src/app/providers/common/toaster.service';
 import { InstituicaoService } from 'src/app/providers/instituicao.service';
@@ -16,6 +17,8 @@ import { Instituicao } from './../../../models/instituicao';
   styleUrls: ['./aluno-edit.component.scss']
 })
 export class AlunoEditComponent implements OnInit, OnDestroy {
+  @ViewChild(EnderecoComponent) childEndereco: EnderecoComponent;
+
   aluno: Aluno;
   formGroup: FormGroup;
   subscription = new Subscription();
@@ -49,31 +52,18 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.aluno = this.activatedRoute.snapshot.data['aluno'];
 
-    console.log(this.aluno);
-
     this.formGroup = this.formBuilder.group({
       id: [this.aluno?.id || 0],
-      pessoaId: [this.aluno?.pessoa?.id || 0],
-      nome: [this.aluno?.pessoa?.nome, Validators.required],
+      pessoaId: [this.aluno?.id || 0],
+      nome: [this.aluno?.nome, Validators.required],
       cpf: [this.aluno?.cpf, Validators.required],
-      telefone: [this.aluno?.pessoa?.telefone, Validators.required],
-      email: [this.aluno?.pessoa?.email],
+      telefone: [this.aluno?.telefone, Validators.required],
+      email: [this.aluno?.email],
       situacaoView: [SituacaiAluno.Ativo ? true : false],
       situacao: [''],
 
-      enderecoId: [this.aluno?.pessoa?.endereco.id || 0],
-      cep: [this.aluno?.pessoa?.endereco?.cep],
-      logradouro: [this.aluno?.pessoa?.endereco?.logradouro],
-      numero: [this.aluno?.pessoa?.endereco?.numero || 0],
-      bairro: [this.aluno?.pessoa?.endereco?.bairro],
-      complemento: [this.aluno?.pessoa?.endereco?.complemento],
-      estado: [this.aluno?.pessoa?.endereco?.estado],
-      cidade: [this.aluno?.pessoa?.endereco?.cidade],
-
       instituicaoEnsinoId: [this.aluno?.instituicaoEnsinoId, Validators.required]
     });
-
-    console.log(this.formGroup.value);
 
     this.configureTitle(this.aluno);
     this.configurarInstituicao();
@@ -90,7 +80,7 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
   save() {
     this.submitted = true;
 
-    if (this.formGroup.valid) {
+    if (this.formGroup.valid && this.childEndereco?.isValid()) {
       this.configurarValores();
       this.alunoService.salvar(ApiRoute.ALUNO_SAVE, this.formGroup.value, 'aluno');
     }
@@ -98,6 +88,11 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
 
   configurarValores() {
     this.situacao.setValue(this.situacaoView.value ? SituacaiAluno.Ativo  : SituacaiAluno.Bloqueado);
+
+    const controls = this.childEndereco.getControls();
+    Object.entries(controls).map((e: any) => {
+      this.formGroup.addControl(e[0], e[1]);
+    });
   }
 
   configurarInstituicao() {
@@ -106,7 +101,7 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
         .subscribe((result: any) => {
           this.instituicoes = result?.items;
 
-          if (this.aluno?.instituicaoEnsino) {
+          if (this.aluno?.instituicaoEnsinoId) {
             this.selectedInstituicao = this.instituicoes.find((e: Instituicao) => e.id === this.instituicao.value);
             this.instituicao.setValue(this.selectedInstituicao);
           }

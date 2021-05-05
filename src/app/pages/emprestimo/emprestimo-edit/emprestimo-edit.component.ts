@@ -122,7 +122,7 @@ export class EmprestimoEditComponent implements OnInit, OnDestroy {
 
   findLivros(description: string) {
     this.subscription.add(
-      this.livroService.getByDescription(description)
+      this.livroService.getLivrosByDescription(description)
         .subscribe((result: any) => {
           if (description === '') {
             this.livros = [];
@@ -137,7 +137,7 @@ export class EmprestimoEditComponent implements OnInit, OnDestroy {
 
   findAlunos(description: string) {
     this.subscription.add(
-      this.alunoService.getByDescription(description)
+      this.alunoService.getAlunosByDescription(description)
         .subscribe((result: any) => {
           if (description === '') {
             this.alunos = []

@@ -42,7 +42,7 @@ export class LivroEditComponent implements OnInit, OnDestroy {
       titulo: [this.livro?.titulo, Validators.required],
       genero: [this.livro?.genero, Validators.required],
       autor: [this.livro?.autor, Validators.required],
-      sinopse: [this.livro?.sinopse]
+      sinopse: [this.livro?.sinopse],
     });
 
     this.configurarGenero();

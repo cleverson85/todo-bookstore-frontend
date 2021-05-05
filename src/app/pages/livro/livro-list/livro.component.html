@@ -3,28 +3,21 @@
     <div class="cad">
       <h1>Livros</h1>
     </div>
-    <div class="d-flex justify-content-center">
+    <form class="d-flex justify-content-center">
       <div class="input-group w-75">
-        <input type="text" class="form-control" placeholder="{{ placeholder }}" aria-describedby="button-addon4" #valueToSearch>
+        <input type="text" class="form-control" placeholder="Consultar por Autor ou Título" aria-describedby="button-addon4" #valueToSearch>
         <div class="input-group-append" id="button-addon4">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Consultar por {{ placeholder }}</button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" (click)="changePlaceholder('Autor', 'A')" style="cursor: pointer;">Autor</a>
-            <a class="dropdown-item" (click)="changePlaceholder('Titulo', 'C')" style="cursor: pointer;">Titulo</a>
-          </div>
-
           <div class="form-group m-0">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gênero - {{ genero?.nome }}</button>
             <div class="dropdown-menu">
               <a class="dropdown-item" style="cursor: pointer;" *ngFor="let item of generos" (click)="changeGenero(item)">{{ item.nome }}</a>
             </div>
           </div>
-
-          <a class="btn btn-success" role="button" (click)="find(valueToSearch.value)">Consultar</a>
-          <a class="btn btn-primary" role="button" routerLink="/livro/0">Cadastrar</a>
+          <button class="btn btn-success" role="button" type="submit" (click)="find(valueToSearch.value)">Consultar</button>
+          <button class="btn btn-primary" role="button" routerLink="/livro/0">Cadastrar</button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   <div *ngIf="livros?.length > 0">
     <table>
@@ -64,7 +57,7 @@
             </span>
           </td>
           <td>
-            <app-menu-list [route]="'livro/' + item.id" [delete]="item" (detalhe)="detalhes(item)"></app-menu-list>
+            <app-menu-list [route]="'livro/' + item.id" [delete]="item" [routeApi]="routeApi" (detalhe)="detalhes(item)" (modelEmitter)="reloadList($event)" ></app-menu-list>
           </td>
         </tr>
       </tbody>

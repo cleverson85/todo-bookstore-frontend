@@ -1,13 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Environment } from '../environment.service';
+import { map, shareReplay } from 'rxjs/operators';
 import { Genero } from '../models/genero';
 import { Livro } from '../models/livro';
 import { ApiRoute } from '../shared/enum/apiRoutes.enum';
-import { SearchValuesLivro } from '../shared/enum/searchValuesLivro.enum';
 import BaseService from './common/base.service';
 
 @Injectable({
@@ -33,46 +30,46 @@ export class LivroService extends BaseService {
       `${ApiRoute.LIVRO_GETALL}?pagina=${page || 1}&itensPorPagina=${
         this.itemsPerPage
       }`
+    ).pipe(
+      shareReplay(1),
+      map((result: Livro[]) => {
+        this.setLivro(result);
+        return result;
+      })
     );
   }
 
-  getGeneros() {
+  getGeneros(): Observable<Genero[]> {
     return this.get<Genero[]>(`${ApiRoute.GENEROS}`)
       .pipe(
         map((result: Genero[]) => {
           result.push({ id: 0, nome: 'Todos' });
           result = result.sort((a, b) => a.id - b.id);
+          this.setGenero(result);
           return result;
         })
       );
   }
 
-  getLivrosByDescription(
-    searchValue: SearchValuesLivro,
-    description: string,
-    genero: Genero
-  ): Observable<Livro[]> {
-    if (SearchValuesLivro.Autor === searchValue && description) {
-      return this.get<Livro[]>(
-        `${ApiRoute.LIVRO_AUTOR}${description}?generoId=${genero.id}&pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
-      );
-    }
-
+  getLivrosByDescription(description: string, genero?: Genero): Observable<Livro[]> {
     if (genero.id > 0 && !description) {
       return this.get<Livro[]>(
         `${ApiRoute.LIVRO_GENERO}${genero.id}?pagina=${1}&itensPorPagina=${
           this.itemsPerPage
         }`
+      ).pipe(
+        map((result: Livro[]) => {
+          this.livro$ = of(result);
+          return result;
+        })
       );
-    }
-
-    if (SearchValuesLivro.Titulo === searchValue && description) {
-      return this.get<Livro[]>(
-        `${ApiRoute.LIVRO_TITULO}${description}?generoId=${genero.id}&pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
+    } else if (description) {
+      return this.get<Livro[]>(`${ApiRoute.LIVRO_DESCRIPTION}${description}`).pipe(
+        shareReplay(1),
+        map((result: Livro[]) => {
+          this.livro$ = of(result);
+          return result;
+        })
       );
     }
   }
@@ -95,9 +92,5 @@ export class LivroService extends BaseService {
           }
         );
     }).catch(e => console.log(e));
-  }
-
-  getByDescription(description: string): Observable<Livro[]> {
-    return this.post<any>({ description: description }, ApiRoute.LIVRO_DESCRIPTION);
   }
 }

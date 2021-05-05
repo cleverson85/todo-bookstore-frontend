@@ -8,7 +8,8 @@ export enum ApiRoute {
   LIVRO_GENERO = 'livro/FindByGenero/',
   LIVRO_TITULO = 'livro/FindByTitulo/',
   LIVRO_SAVE = 'livro/Save',
-  LIVRO_DESCRIPTION = 'livro/FindByDescription',
+  LIVRO_DESCRIPTION = 'livro/FindByDescription/',
+  LIVRO_DELETE = 'livro/Delete/',
   GENEROS = 'livro/GetAllGeneros',
 
   ALUNO_ID = 'cliente/FindById/',

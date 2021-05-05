@@ -1,11 +1,11 @@
-import { Instituicao } from './../../../models/instituicao';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { EnderecoComponent } from 'src/app/components/endereco/endereco.component';
 import { InstituicaoService } from 'src/app/providers/instituicao.service';
-import { ToasterService } from 'src/app/providers/common/toaster.service';
 import { ApiRoute } from 'src/app/shared/enum/apiRoutes.enum';
+import { Instituicao } from './../../../models/instituicao';
 
 @Component({
   selector: 'app-instituicao-edit',
@@ -13,6 +13,8 @@ import { ApiRoute } from 'src/app/shared/enum/apiRoutes.enum';
   styleUrls: ['./instituicao-edit.component.scss']
 })
 export class InstituicaoEditComponent implements OnInit, OnDestroy {
+  @ViewChild(EnderecoComponent) childEndereco: EnderecoComponent;
+
   instituicao: Instituicao;
   formGroup: FormGroup;
   subscription = new Subscription();
@@ -23,8 +25,7 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private instituicaoService: InstituicaoService,
-    private toaster: ToasterService
+    private instituicaoService: InstituicaoService
   ) { }
 
   ngOnInit() {
@@ -32,19 +33,10 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
 
     this.formGroup = this.formBuilder.group({
       id: [this.instituicao?.id || 0],
-      pessoaId: [this.instituicao?.pessoa?.id],
-      nome: [this.instituicao?.pessoa?.nome, Validators.required],
+      pessoaId: [this.instituicao?.id || 0],
+      nome: [this.instituicao?.nome, Validators.required],
       cnpj: [this.instituicao?.cnpj, Validators.required],
-      telefone: [this.instituicao?.pessoa?.telefone, Validators.required],
-
-      enderecoId: [this.instituicao.pessoa.endereco.id],
-      cep: [this.instituicao?.pessoa?.endereco?.cep, Validators.required],
-      logradouro: [this.instituicao?.pessoa?.endereco?.logradouro, Validators.required],
-      numero: [this.instituicao?.pessoa?.endereco?.numero, Validators.required],
-      bairro: [this.instituicao?.pessoa?.endereco?.bairro, Validators.required],
-      estado: [this.instituicao?.pessoa?.endereco?.estado, Validators.required],
-      cidade: [this.instituicao?.pessoa?.endereco?.cidade, Validators.required],
-      complemento: [this.instituicao?.pessoa?.endereco?.complemento],
+      telefone: [this.instituicao?.telefone, Validators.required],
     });
 
     this.configureTitle(this.instituicao);
@@ -57,7 +49,13 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
   save() {
     this.submitted = true;
 
-    if (this.formGroup.valid) {
+    if (this.formGroup.valid && this.childEndereco?.isValid()) {
+
+      const controls = this.childEndereco.getControls();
+      Object.entries(controls).map((e: any) => {
+        this.formGroup.addControl(e[0], e[1]);
+      });
+
       this.instituicaoService.salvar(ApiRoute.INSTITUICAO_SAVE, this.formGroup.value, 'instituicao');
     }
   }

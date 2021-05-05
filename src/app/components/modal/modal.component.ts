@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Livro } from './../../models/livro';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-  
-  constructor() { }
+  @Input() Livro: Livro;
+
+  constructor() {}
 
   ngOnInit() {
     this.getAlbuns();
   }
 
-  getAlbuns(): any {
-
-  }
+  getAlbuns(): any {}
 
   getSrc(imagem: any) {
     // return imagem.url;
