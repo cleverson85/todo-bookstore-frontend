@@ -80,8 +80,7 @@
         <div class="form-row">
           <div class="form-group col-md-12 d-flex flex-column">
             <label for="genero">Instituição de Ensino</label>
-            <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" formControlName="instituicaoEnsinoId" 
-              [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
+            <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" formControlName="instituicaoEnsinoId" [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
               <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.nome }}</option>
             </select>
             <div class="invalid-feedback" *ngIf="hasError('instituicaoEnsinoId') && hasError('instituicaoEnsinoId')['required']">

@@ -33,7 +33,7 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
 
     this.formGroup = this.formBuilder.group({
       id: [this.instituicao?.id || 0],
-      pessoaId: [this.instituicao?.id || 0],
+      pessoaId: [this.instituicao?.pessoaId || 0],
       nome: [this.instituicao?.nome, Validators.required],
       cnpj: [this.instituicao?.cnpj, Validators.required],
       telefone: [this.instituicao?.telefone, Validators.required],

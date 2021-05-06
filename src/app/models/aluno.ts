@@ -1,3 +1,4 @@
+import { Instituicao } from './instituicao';
 import { SituacaiAluno } from '../shared/enum/situacaoAluno.enum';
 import { Base } from './base';
 

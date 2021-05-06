@@ -52,7 +52,7 @@ export class LivroComponent implements OnInit, OnDestroy {
 
   getLivros(page?: number) {
     this.subscription.add(
-      this.livroService.livro$.subscribe((result: any) => {
+      this.livroService.getLivros(page).subscribe((result: any) => {
           this.configureItens(result);
         }
       ));
@@ -68,11 +68,6 @@ export class LivroComponent implements OnInit, OnDestroy {
   }
 
   find(description: string) {
-    if (!description) {
-      this.getLivros();
-      return;
-    }
-
     this.subscription.add(
       this.livroService.getLivrosByDescription(description, this.genero)
         .subscribe((result: any) => {

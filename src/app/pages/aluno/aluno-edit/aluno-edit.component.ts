@@ -54,7 +54,7 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
 
     this.formGroup = this.formBuilder.group({
       id: [this.aluno?.id || 0],
-      pessoaId: [this.aluno?.id || 0],
+      pessoaId: [this.aluno?.pessoaId || 0],
       nome: [this.aluno?.nome, Validators.required],
       cpf: [this.aluno?.cpf, Validators.required],
       telefone: [this.aluno?.telefone, Validators.required],
@@ -102,8 +102,8 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
           this.instituicoes = result?.items;
 
           if (this.aluno?.instituicaoEnsinoId) {
-            this.selectedInstituicao = this.instituicoes.find((e: Instituicao) => e.id === this.instituicao.value);
-            this.instituicao.setValue(this.selectedInstituicao);
+            this.selectedInstituicao = this.instituicoes.find((e: Instituicao) => e.id === this.aluno.instituicaoEnsinoId);
+            this.instituicao.setValue(this.selectedInstituicao.id);
           }
         })
     );

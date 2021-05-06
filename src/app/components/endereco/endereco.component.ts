@@ -8,7 +8,7 @@ import { Endereco } from 'src/app/models/endereco';
   styleUrls: ['./endereco.component.scss'],
 })
 export class EnderecoComponent implements OnInit {
-  @Input() data: Endereco;
+  @Input() data: any;
   @Input() submitted: boolean;
   @Output() enderecoEmitter = new EventEmitter();
 
@@ -18,7 +18,7 @@ export class EnderecoComponent implements OnInit {
 
   ngOnInit() {
     this.formGroupEndereco = new FormGroup({
-      enderecoId: new FormControl(this.data?.id || 0),
+      enderecoId: new FormControl(this.data?.enderecoId || 0),
       cep: new FormControl(this.data?.cep, Validators.required),
       logradouro: new FormControl(this.data?.logradouro, Validators.required),
       numero: new FormControl(this.data?.numero, Validators.required),
