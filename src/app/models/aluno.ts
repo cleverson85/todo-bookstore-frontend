@@ -1,26 +1,12 @@
+import { Endereco } from './endereco';
 import { Instituicao } from './instituicao';
-import { SituacaiAluno } from '../shared/enum/situacaoAluno.enum';
+import { Pessoa } from './pessoa';
 import { Base } from './base';
+import { SituacaiAluno } from '../shared/enum/situacaoAluno.enum';
 
 export interface Aluno extends Base {
   cpf: string;
   situacao: SituacaiAluno;
-
-  pessoaId: number;
-  nome: string;
-  email: string;
-  telefone: string;
-
-  instituicaoEnsinoId: number;
-
-  enderecoId: number;
-  cep: string;
-  bairro: string;
-  logradouro: string;
-  complemento: string;
-  numero: number;
-  estado: string;
-  cidade: string;
-  localidade: string;
-  uf: string;
+  pessoa: Pessoa;
+  instituicaoEnsino: Instituicao;
 }

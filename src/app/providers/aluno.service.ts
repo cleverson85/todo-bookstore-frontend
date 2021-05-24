@@ -20,11 +20,11 @@ export class AlunoService extends BaseService {
     );
   }
 
-  getAlunosByDescription(
-    description: string,
-  ): Observable<Aluno[]> {
+  getAlunosByDescription(description: string, page?: number): Observable<Aluno[]> {
     if (description) {
-      return this.post<any>({ description: description }, ApiRoute.ALUNO_DESCRIPTION);
+      return this.get<any>(`${ApiRoute.ALUNO_DESCRIPTION}${description}?pagina=${page || 1}&itensPorPagina=${this.itemsPerPage}`);
     }
+
+    return this.getAlunos(page);
   }
 }

@@ -16,9 +16,11 @@ export class InstituicaoService extends BaseService {
     );
   }
 
-  getByDescription(description: string): Observable<Instituicao[]> {
+  getByDescription(description: string, page?: number): Observable<Instituicao[]> {
     if (description) {
-      return this.post<any>({ description: description }, ApiRoute.INSTITUICAO_DESCRIPTION);
+      return this.get<any>(`${ApiRoute.INSTITUICAO_DESCRIPTION}${encodeURIComponent(description)}?pagina=${page || 1}&itensPorPagina=${this.itemsPerPage}`);
     }
+
+    return this.getInstituicoes(page);
   }
 }

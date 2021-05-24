@@ -26,11 +26,7 @@ export class LivroService extends BaseService {
   }
 
   getLivros(page?: number): Observable<Livro[]> {
-    return this.get<Livro[]>(
-      `${ApiRoute.LIVRO_GETALL}?pagina=${page || 1}&itensPorPagina=${
-        this.itemsPerPage
-      }`
-    ).pipe(
+    return this.get<Livro[]>(`${ApiRoute.LIVRO_GETALL}?pagina=${page || 1}&itensPorPagina=${this.itemsPerPage}`).pipe(
       shareReplay(1),
       map((result: Livro[]) => {
         this.setLivro(result);
@@ -40,23 +36,31 @@ export class LivroService extends BaseService {
   }
 
   getGeneros(): Observable<Genero[]> {
-    return this.get<Genero[]>(`${ApiRoute.GENEROS}`)
-      .pipe(
-        map((result: Genero[]) => {
-          result.push({ id: 0, nome: 'Todos' });
-          result = result.sort((a, b) => a.id - b.id);
-          this.setGenero(result);
+    return this.get<Genero[]>(`${ApiRoute.GENEROS}`).pipe(
+      map((result: Genero[]) => {
+        result.push({ id: 0, nome: 'Todos' });
+        result = result.sort((a, b) => a.id - b.id);
+        this.setGenero(result);
+        return result;
+      })
+    );
+  }
+
+  getLivrosByDescription(description: string, genero?: Genero, page?: number): Observable<Livro[]> {
+    page = page || 1;
+
+    if (genero.id > 0 && !description) {
+      return this.get<Livro[]>(
+        `${ApiRoute.LIVRO_GENERO}${genero.id}?pagina=${page}&itensPorPagina=${this.itemsPerPage}`
+      ).pipe(
+        map((result: Livro[]) => {
+          this.livro$ = of(result);
           return result;
         })
       );
-  }
-
-  getLivrosByDescription(description: string, genero?: Genero): Observable<Livro[]> {
-    if (genero.id > 0 && !description) {
+    } else if (genero.id > 0 && description) {
       return this.get<Livro[]>(
-        `${ApiRoute.LIVRO_GENERO}${genero.id}?pagina=${1}&itensPorPagina=${
-          this.itemsPerPage
-        }`
+        `${ApiRoute.LIVRO_GENERO_DESCRIPTION}${genero.id}/${description}?pagina=${page}&itensPorPagina=${this.itemsPerPage}`
       ).pipe(
         map((result: Livro[]) => {
           this.livro$ = of(result);
@@ -64,7 +68,9 @@ export class LivroService extends BaseService {
         })
       );
     } else if (description) {
-      return this.get<Livro[]>(`${ApiRoute.LIVRO_DESCRIPTION}${description}`).pipe(
+      return this.get<Livro[]>(
+        `${ApiRoute.LIVRO_DESCRIPTION}${description}?pagina=${page}&itensPorPagina=${this.itemsPerPage}`
+      ).pipe(
         shareReplay(1),
         map((result: Livro[]) => {
           this.livro$ = of(result);
@@ -72,25 +78,34 @@ export class LivroService extends BaseService {
         })
       );
     }
+
+    return this.getLivros(page);
   }
 
   salvar(formGroup: any, file: File) {
-    file.arrayBuffer().then((e: any) => {
-      formGroup['ImagemCapa'] = btoa(new Uint8Array(e).reduce(
-        (data, byte) => data + String.fromCharCode(byte), ''
-      ));
+    file
+      .arrayBuffer()
+      .then((e: any) => {
+        formGroup['ImagemCapa'] = btoa(new Uint8Array(e).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-      this.httpClient.post(this.API + ApiRoute.LIVRO_SAVE, formGroup)
-        .subscribe((result: any) => {
-            this.toasterService.showToastSuccess('Operação efetuada com sucesso.');
-            this.router.navigate(['livro']);
-          },
-          (err: HttpErrorResponse) => {
-            const { error } = err;
-            console.log('ERROR => ' + error);
-            this.toasterService.showToastError('Não foi possível exetuar a operação, tente novamente mais tarde.');
-          }
-        );
-    }).catch(e => console.log(e));
+        this.httpClient
+          .post(this.API + ApiRoute.LIVRO_SAVE, formGroup)
+          .subscribe(
+            (result: any) => {
+              this.toasterService.showToastSuccess(
+                'Operação efetuada com sucesso.'
+              );
+              this.router.navigate(['livro']);
+            },
+            (err: HttpErrorResponse) => {
+              const { error } = err;
+              console.log('ERROR => ' + error);
+              this.toasterService.showToastError(
+                'Não foi possível exetuar a operação, tente novamente mais tarde.'
+              );
+            }
+          );
+      })
+      .catch((e) => console.log(e));
   }
 }

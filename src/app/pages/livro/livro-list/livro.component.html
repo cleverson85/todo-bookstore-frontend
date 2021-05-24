@@ -13,7 +13,7 @@
               <a class="dropdown-item" style="cursor: pointer;" *ngFor="let item of generos" (click)="changeGenero(item)">{{ item.nome }}</a>
             </div>
           </div>
-          <button class="btn btn-success" role="button" type="submit" (click)="find(valueToSearch.value)">Consultar</button>
+          <button class="btn btn-success" role="button" type="submit" (click)="find()">Consultar</button>
           <button class="btn btn-primary" role="button" routerLink="/livro/0">Cadastrar</button>
         </div>
       </div>
@@ -63,7 +63,7 @@
       </tbody>
     </table>
     <div class="footer">
-      <app-pagination [numberPages]="pages" (pageChange)="onPageChange($event)"></app-pagination>
+      <app-pagination [items]="pages" (pageChange)="onPageChange($event)"></app-pagination>
     </div>
   </div>
 </div>

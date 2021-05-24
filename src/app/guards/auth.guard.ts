@@ -4,7 +4,6 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Router, RouterStateSnapsh
 import { Observable } from 'rxjs';
 import { AuthService } from '../providers/auth.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +12,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService,
               private router: Router) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return this.verificarAcesso();
   }
 
@@ -25,7 +21,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   private verificarAcesso(): boolean {
-    if (this.authService.tokenIsExpired()){
+    if (this.authService.tokenIsExpired()) {
       this.router.navigate(['']);
     }
 

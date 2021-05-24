@@ -24,7 +24,7 @@ export class LivroEditComponent implements OnInit, OnDestroy {
   file: File;
 
   get genero() {
-    return this.formGroup.get('genero');
+    return this.formGroup.get('generoId');
   }
 
   constructor(
@@ -40,9 +40,10 @@ export class LivroEditComponent implements OnInit, OnDestroy {
     this.formGroup = this.formBuilder.group({
       id: [this.livro?.id || 0],
       titulo: [this.livro?.titulo, Validators.required],
-      genero: [this.livro?.genero, Validators.required],
+      genero: [this.livro?.genero.id],
       autor: [this.livro?.autor, Validators.required],
       sinopse: [this.livro?.sinopse],
+      generoId: [this.livro?.genero.id, Validators.required],
     });
 
     this.configurarGenero();
@@ -71,13 +72,13 @@ export class LivroEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  configurarImagem(){
+  configurarImagem() {
     if (this.livro && this.livro.imagemCapa) {
       this.url = `data:image/jpeg;base64,${this.livro.imagemCapa}`;
 
       fetch(this.url)
         .then(res => res.blob())
-        .then(res => this.file = new File(new Array(res), ''))
+        .then(res => this.file = new File(new Array(res), ''));
     }
   }
 
@@ -87,14 +88,14 @@ export class LivroEditComponent implements OnInit, OnDestroy {
         this.generos = res.filter((e: Genero) =>  e.id > 0);
 
         if (this.livro) {
-          this.selectedGenero = this.generos.find((e: Genero) => e.id === this.livro.genero?.id);
-          this.genero.setValue(this.selectedGenero);
+          this.selectedGenero = this.generos.find((e: Genero) => e.id === this.livro?.genero.id);
+          this.genero.setValue(this.selectedGenero.id);
         }
       });
   }
 
-  changeGenero(event: any) {
-    this.genero.setValue(event.target.value, { onlySelf: true });
+  changeGenero(value: any) {
+    this.genero.setValue(value);
   }
 
   onSelectFile(event: any) {

@@ -8,19 +8,23 @@ import { Environment } from 'src/app/environment.service';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit {
-  @Output() pageChange = new EventEmitter();
-  @Input() numberPages: number;
+  @Output() pageChange = new EventEmitter<number>();
+  @Input() items: number;
 
   subscription = new Subscription();
   config: any;
   totalPages: number;
   pages = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.configurePageNumbers();
+  }
+
+  configurePageNumbers() {
     let index = 0;
-    while (index < this.numberPages) {
+    while (index < this.items) {
       this.pages.push(index);
       index++;
     }

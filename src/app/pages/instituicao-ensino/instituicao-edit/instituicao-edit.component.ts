@@ -33,10 +33,10 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
 
     this.formGroup = this.formBuilder.group({
       id: [this.instituicao?.id || 0],
-      pessoaId: [this.instituicao?.pessoaId || 0],
-      nome: [this.instituicao?.nome, Validators.required],
+      pessoaId: [this.instituicao?.pessoa.id || 0],
+      nome: [this.instituicao?.pessoa.nome, Validators.required],
       cnpj: [this.instituicao?.cnpj, Validators.required],
-      telefone: [this.instituicao?.telefone, Validators.required],
+      telefone: [this.instituicao?.pessoa.telefone, Validators.required],
     });
 
     this.configureTitle(this.instituicao);
@@ -66,11 +66,5 @@ export class InstituicaoEditComponent implements OnInit, OnDestroy {
 
   configureTitle(instituicao: Instituicao) {
     this.titulo = instituicao?.id > 0 ? 'Editar Instituição' : 'Cadastrar Instituição';
-  }
-
-  carregaEndereco(event: any) {
-    // this.alunoService.getUrl<any>(`https://viacep.com.br/ws/${event.target.value}/json/`).subscribe((result: any) => {
-    //   console.log(result);
-    // });
   }
 }

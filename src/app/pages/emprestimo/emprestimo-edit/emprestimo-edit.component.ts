@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Aluno } from 'src/app/models/aluno';
@@ -140,7 +139,7 @@ export class EmprestimoEditComponent implements OnInit, OnDestroy {
       this.alunoService.getAlunosByDescription(description)
         .subscribe((result: any) => {
           if (description === '') {
-            this.alunos = []
+            this.alunos = [];
             return;
           }
 
@@ -164,7 +163,7 @@ export class EmprestimoEditComponent implements OnInit, OnDestroy {
 
   adicionarLivro(item: Livro) {
     if (this.livrosSelected.length === 2) {
-      this.toasterService.showToastWarning('Número máximo de livros para empréstimo atingido. Máximo 2 livros por usuário')
+      this.toasterService.showToastWarning('Número máximo de livros para empréstimo atingido. Máximo 2 livros por usuário');
       return;
     }
 

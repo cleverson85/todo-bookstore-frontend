@@ -31,9 +31,9 @@ export class MenuListComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private toaster: ToasterService,
     private baseService: BaseService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -48,7 +48,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
       this.subscription = this.modalService
         .showConfirm(
           'Atenção',
-          `Confirma exclusão do item ${this.delete.titulo}?`
+          `Confirma exclusão do item?`
         )
         .subscribe((result: boolean) => {
           if (result) {

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { EnderecoModule } from 'src/app/components/endereco/endereco.module';
 import { MenuListModule } from 'src/app/components/menu-list/menu-list.module';
 import { PaginationModule } from 'src/app/components/pagination/pagination.module';
@@ -7,6 +8,8 @@ import { InstituicaoEditComponent } from './instituicao-edit/instituicao-edit.co
 import { InstituicaoEnsinoRoutingModule } from './instituicao-ensino-routing.module';
 import { InstituicaoEnsinoComponent } from './instituicao-list/instituicao-ensino.component';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+
 @NgModule({
   imports: [
     SharedModule,
@@ -14,6 +17,7 @@ import { InstituicaoEnsinoComponent } from './instituicao-list/instituicao-ensin
     PaginationModule,
     MenuListModule,
     EnderecoModule,
+    NgxMaskModule.forRoot(),
   ],
   declarations: [InstituicaoEnsinoComponent, InstituicaoEditComponent],
 })

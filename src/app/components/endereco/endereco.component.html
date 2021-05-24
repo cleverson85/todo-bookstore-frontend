@@ -12,6 +12,7 @@
         type="text"
         placeholder="Cep"
         formControlName="cep"
+        (blur)="dadosCep($event)"
         [ngClass]="{ 'is-invalid': submitted && hasError('cep') }"
       />
       <div
@@ -79,37 +80,39 @@
 
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="cidade">Cidade *</label>
-      <input
-        id="cidade"
-        class="form-control"
-        type="text"
-        placeholder="Cidade"
-        formControlName="cidade"
-        [ngClass]="{ 'is-invalid': submitted && hasError('cidade') }"
-      />
-      <div
-        class="invalid-feedback"
-        *ngIf="hasError('cidade') && hasError('cidade')['required']"
-      >
-        Informe a cidade.
-      </div>
-    </div>
-    <div class="form-group col-md-4">
       <label for="estado">Estado *</label>
-      <input
-        id="estado"
-        class="form-control"
-        type="text"
-        placeholder="Estado"
-        formControlName="estado"
-        [ngClass]="{ 'is-invalid': submitted && hasError('estado') }"
-      />
+      <ng-select #selectedEstado
+                [items]="estados"
+                bindValue="id"
+                bindLabel="nome"
+                (change)="setEstado($event)"
+                formControlName="estado"
+                notFoundText="Não encontrado"
+                [ngClass]="{ 'is-invalid': submitted && hasError('estado') }">
+      </ng-select>
       <div
         class="invalid-feedback"
         *ngIf="hasError('estado') && hasError('estado')['required']"
       >
         Informe o estado.
+      </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="cidade">Cidade *</label>
+      <ng-select
+                [items]="municipios"
+                bindValue="id"
+                bindLabel="nome"
+                (change)="setCidade($event)"
+                formControlName="cidade"
+                notFoundText="Não encontrado"
+                [ngClass]="{ 'is-invalid': submitted && hasError('cidade') }">
+      </ng-select>
+      <div
+        class="invalid-feedback"
+        *ngIf="hasError('cidade') && hasError('cidade')['required']"
+      >
+        Informe a cidade.
       </div>
     </div>
     <div class="form-group col-md-4">

@@ -39,6 +39,7 @@
             <input
               id="cpf"
               class="form-control"
+              mask="CPF_CNPJ"
               type="text"
               placeholder="Cpf"
               formControlName="cpf"
@@ -52,6 +53,7 @@
             <input 
               id="telefone"
               class="form-control"
+              mask="(00) 0000-0000 || (00) 0 0000-0000 || ''"
               type="text"
               placeholder="Telefone"
               formControlName="telefone"
@@ -69,19 +71,20 @@
               placeholder="E-mail"
               formControlName="email"
               [ngClass]="{ 'is-invalid': submitted && hasError('email') }">
-              <div class="invalid-feedback" *ngIf="hasError('email') && hasError('email')['required']">
-                Informe o email.
+              <div class="invalid-feedback" *ngIf="hasError('email')">
+                O e-mail informado é inválido.
               </div>
           </div>
         </div>   
         
-        <app-endereco [data]="aluno" [submitted]="submitted" ></app-endereco>
+        <app-endereco [data]="aluno?.pessoa.endereco" [submitted]="submitted" ></app-endereco>
 
         <div class="form-row">
           <div class="form-group col-md-12 d-flex flex-column">
             <label for="genero">Instituição de Ensino</label>
-            <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" formControlName="instituicaoEnsinoId" [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
-              <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.nome }}</option>
+            <select class="custom-select" id="genero" (change)="changeInstituicao(instituicao.value)" 
+                    formControlName="instituicaoEnsinoId" [ngClass]="{ 'is-invalid': submitted && hasError('instituicaoEnsinoId') }">
+              <option *ngFor="let item of instituicoes" [value]="item.id" #instituicao>{{ item?.pessoa.nome }}</option>
             </select>
             <div class="invalid-feedback" *ngIf="hasError('instituicaoEnsinoId') && hasError('instituicaoEnsinoId')['required']">
               Informe a instiuição de ensino.

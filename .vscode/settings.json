@@ -20,5 +20,6 @@
       "source.fixAll.eslint": true
     },
     "editor.formatOnSave": false
-  }
+  },
+  "terminal.integrated.cursorBlinking": true
 }

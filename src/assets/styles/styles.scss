@@ -4,6 +4,7 @@
 @import '@angular/material/prebuilt-themes/purple-green.css';
 @import 'layout/layout';
 @import './../fonts/customfont.scss';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 * {
   margin: 0;

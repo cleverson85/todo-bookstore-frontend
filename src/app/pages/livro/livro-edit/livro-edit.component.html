@@ -57,10 +57,10 @@
           </div>
           <div class="form-group col-md-3 d-flex flex-column w-25">
             <label for="genero">Gênero *</label>
-            <select class="custom-select" id="genero" (change)="changeGenero($event)" formControlName="genero" [ngClass]="{ 'is-invalid': submitted && hasError('genero') }">
-              <option *ngFor="let item of generos" [ngValue]="item">{{ item?.nome }}</option>
+            <select class="custom-select" id="genero" (change)="changeGenero(genero.value)" formControlName="generoId" [ngClass]="{ 'is-invalid': submitted && hasError('generoId') }">
+              <option *ngFor="let item of generos" [value]="item.id" #genero>{{ item?.nome }}</option>
             </select>
-            <div class="invalid-feedback" *ngIf="hasError('genero') && hasError('genero')['required']">
+            <div class="invalid-feedback" *ngIf="hasError('generoId') && hasError('generoId')['required']">
               Informe o gênero do livro.
             </div>
           </div>

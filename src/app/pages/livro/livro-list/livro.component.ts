@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { Genero } from 'src/app/models/genero';
@@ -15,7 +15,7 @@ import { Livro } from './../../../models/livro';
   styleUrls: ['./livro.component.scss'],
 })
 export class LivroComponent implements OnInit, OnDestroy {
-  @ViewChild(PaginationComponent) childPagination: PaginationComponent;
+  @ViewChild('valueToSearch') valueToSearch: ElementRef;
 
   subscription = new Subscription();
   searchValue = SearchValuesLivro.Titulo;
@@ -50,26 +50,9 @@ export class LivroComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  getLivros(page?: number) {
+  find(page?: number) {
     this.subscription.add(
-      this.livroService.getLivros(page).subscribe((result: any) => {
-          this.configureItens(result);
-        }
-      ));
-  }
-
-  getGeneros() {
-    this.subscription.add(
-      this.livroService.genero$.subscribe((result: any) => {
-        this.generos = result;
-        this.changeGenero(this.generos[0]);
-      })
-    );
-  }
-
-  find(description: string) {
-    this.subscription.add(
-      this.livroService.getLivrosByDescription(description, this.genero)
+      this.livroService.getLivrosByDescription(this.valueToSearch.nativeElement.value, this.genero, page)
         .subscribe((result: any) => {
           if (result?.items.length === 0) {
             this.toasterService.showToastWarning('Nenhum item foi encontrado.');
@@ -94,7 +77,7 @@ export class LivroComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(page: any) {
-    this.getLivros(page);
+    this.find(page);
   }
 
   changeGenero(genero: Genero) {

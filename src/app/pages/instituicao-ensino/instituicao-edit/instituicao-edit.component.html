@@ -36,6 +36,7 @@
               id="cnpj"
               class="form-control"
               type="text"
+              mask="CPF_CNPJ"
               placeholder="Cnpj"
               formControlName="cnpj"
               [ngClass]="{ 'is-invalid': submitted && hasError('cnpj') }">
@@ -49,6 +50,7 @@
               id="telefone"
               class="form-control"
               type="text"
+              mask="(00) 0000-0000 || (00) 0 0000-0000"
               placeholder="Telefone"
               formControlName="telefone"
               [ngClass]="{ 'is-invalid': submitted && hasError('telefone') }">
@@ -58,7 +60,7 @@
           </div>
         </div>   
         
-        <app-endereco [data]="instituicao" [submitted]="submitted"></app-endereco>
+        <app-endereco [data]="instituicao?.pessoa.endereco" [submitted]="submitted"></app-endereco>
 
       </div>
     </div>

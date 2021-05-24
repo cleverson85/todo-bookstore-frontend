@@ -4,5 +4,5 @@
   "api": {
     "url": "https://localhost:5001/api/"
   },
-  "itensPerPage": 9
+  "itensPerPage": 10
 }

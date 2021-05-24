@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { EnderecoComponent } from './endereco.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { EnderecoComponent } from './endereco.component';
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [SharedModule, NgSelectModule, FormsModule],
   declarations: [EnderecoComponent],
   exports: [EnderecoComponent]
 })
