@@ -116,10 +116,4 @@ export class AlunoEditComponent implements OnInit, OnDestroy {
   configureTitle(aluno: Aluno) {
     this.titulo = aluno?.id > 0 ? 'Editar Aluno' : 'Cadastrar Aluno';
   }
-
-  carregaEndereco(event: any) {
-    // this.alunoService.getUrl<any>(`https://viacep.com.br/ws/${event.target.value}/json/`).subscribe((result: any) => {
-    //   console.log(result);
-    // });
-  }
 }

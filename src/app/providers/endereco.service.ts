@@ -8,7 +8,7 @@ export class EnderecoService extends BaseService {
 
   getDadosCep(event: any): any {
     if (event) {
-      return fetch(`https://viacep.com.br/ws/${event.target.value}/json/`)
+      return fetch(`https://viacep.com.br/ws/${event.target ? event.target.value : event}/json/`)
         .then((result) => result.json());
     }
   }

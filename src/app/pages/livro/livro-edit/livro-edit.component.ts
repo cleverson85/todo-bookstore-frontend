@@ -40,10 +40,10 @@ export class LivroEditComponent implements OnInit, OnDestroy {
     this.formGroup = this.formBuilder.group({
       id: [this.livro?.id || 0],
       titulo: [this.livro?.titulo, Validators.required],
-      genero: [this.livro?.genero.id],
+      genero: [this.livro?.genero?.id],
       autor: [this.livro?.autor, Validators.required],
       sinopse: [this.livro?.sinopse],
-      generoId: [this.livro?.genero.id, Validators.required],
+      generoId: [this.livro?.genero?.id, Validators.required],
     });
 
     this.configurarGenero();

@@ -26,7 +26,6 @@ export class EnderecoComponent implements OnInit, OnDestroy {
   @Input() data: Endereco;
   @Input() submitted: boolean;
   @Output() enderecoEmitter = new EventEmitter();
-  @ViewChild('selectedEstado') selectedEstado: NgSelectComponent;
 
   subscription = new Subscription();
   formGroupEndereco: FormGroup;
@@ -104,14 +103,14 @@ export class EnderecoComponent implements OnInit, OnDestroy {
     this.setEndereco({ bairro, cep, complemento, localidade, logradouro, uf });
 
     const estadoSelected = this.estados.find((e: any) => e.sigla === uf);
-    this.estado.patchValue(estadoSelected.id);
+    this.estado.patchValue(estadoSelected?.id);
 
     this.subscription.add(
       this.enderecoService.getMunicipios(uf)
         .subscribe((res: any) => {
           this.municipios = [...res];
           const municipioSelected = this.municipios.find((e: any) => e.nome === localidade);
-          this.cidade.patchValue(municipioSelected.id);
+          this.cidade.patchValue(municipioSelected?.id);
         }),
     );
   }
@@ -137,7 +136,7 @@ export class EnderecoComponent implements OnInit, OnDestroy {
       this.enderecoService.getEstados()
         .subscribe((result: any) => {
           this.estados = [...result];
-          this.configureEstado();
+          this.dadosCep(this.data?.cep);
         }),
     );
   }
